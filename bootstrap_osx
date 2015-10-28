@@ -1,0 +1,140 @@
+# NB: This guide is very out of date
+
+##
+# Install XCode
+
+# Install through the app store
+
+# Start xcode to accept the license
+
+# Install the CLI tools
+xcode-select --install
+
+# OpenZFS
+
+openzfs_version="1.3.0"
+
+curl https://openzfsonosx.org/w/images/d/d9/{OpenZFS_on_OS_X_$version_openzfs.dmg} -o "#1"
+
+open OpenZFS_on_OS_X_$version_openzfs.dmg
+
+##
+# Chef
+
+sudo true && curl -L https://www.opscode.com/chef/install.sh | sudo bash
+
+##
+# Local install dir
+
+export PATH=/opt/bin:$PATH
+
+##
+# Ruby-install
+
+cd ~/Development
+#wget -O ruby-install-0.5.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz
+curl -L https://github.com/postmodern/ruby-install/archive/v{0.5.0.tar.gz} -o "ruby-install-#1"
+tar -xzvf ruby-install-0.5.0.tar.gz
+cd ruby-install-0.5.0/
+sudo PREFIX="/opt" make install
+
+sudo ruby-install ruby 1.9
+sudo ln -s /opt/chef/embedded /opt/rubies/chef-embedded
+
+##
+# Chruby
+
+cd ~/Development
+#wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.8.tar.gz
+curl -L https://github.com/postmodern/chruby/archive/v{0.3.9.tar.gz} -o "chruby-#1"
+tar -xzvf chruby-0.3.9.tar.gz
+cd chruby-0.3.9/
+sudo PREFIX="/opt" make install
+
+##
+# Cheffish and Chef-Metal
+
+chruby chef-embedded
+
+cd ~/Development
+git clone https://github.com/opscode/cheffish.git
+cd cheffish
+sudo -E rake install
+cd ..
+
+git clone https://github.com/opscode/chef-metal.git
+cd chef-metal
+sudo -E rake install
+
+##
+# Node.js and NPM
+
+cd ~/Development
+git clone https://github.com/joyent/node.git
+cd node
+./configure --prefix=/opt
+make -j8
+sudo make install
+
+#echo prefix = /opt >> ~/.npmrc
+#git clone https://github.com/isaacs/npm.git
+#cd npm
+#make -j8
+#sudo make install
+
+##
+# AWS CLI
+
+cd ~/Development
+wget https://s3.amazonaws.com/aws-cli/awscli-bundle.zip
+unzip awscli-bundle.zip
+rm awscli-bundle.zip
+sudo ./awscli-bundle/install -i /opt/lib/aws -b /opt/bin/aws
+
+##
+# pkgsrc
+
+curl -s http://pkgsrc.smartos.org/packages/Darwin/bootstrap/bootstrap-2014Q3.tar.gz | sudo tar -zxpf - -C /
+export PATH=/usr/pkg/sbin:/usr/pkg/bin:$PATH
+sudo pkgin update
+
+# Set default mail client
+
+# More
+
+CheatSheet
+XQuarts
+Wireshark
+Caffeine
+MacPorts
+iterm2
+Google Chrome
+Firefox
+LastPass
+ChefDK
+syncthing
+AWS CLI tools
+Adobe Air
+Pandora One
+Evernote
+HipChat
+DropBox
+Google Drive
+Telegram
+Adium
+Night Owl
+RescueTime
+Vagrant
+VirtualBox
+
+# More
+
+Reconfigure dock
+Set hot corner
+Set immediate password prompt after screen save
+Enable remote SSH
+Enable firewall
+iterm profile
+zsh shell
+dotfiles
+Printer
